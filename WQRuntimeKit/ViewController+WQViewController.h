@@ -13,7 +13,6 @@
     UITableViewDataSource
 >
 @property (nonatomic, copy) NSString *str2;
-- (void)func2;
 @end
 
 

@@ -66,7 +66,7 @@
     return message;
 }
 
-+ (NSArray *)protocolNamesWithClass:(Class)mClass {
++ (NSArray<NSString *> *)protocolNamesWithClass:(Class)mClass {
     unsigned int count = 0;
     __unsafe_unretained Protocol **protocolList = class_copyProtocolList(mClass, &count);
     NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:count];
@@ -79,27 +79,53 @@
     return names;
 }
 
-+ (void)addMethodForClass:(Class)mClass
-               methodName:(SEL)name
-                implement:(SEL)implement {
++ (void)addInstanceMethodForClass:(Class)mClass
+                       methodName:(SEL)name
+                        implement:(SEL)implement {
     Method method = class_getInstanceMethod(mClass, implement);
     IMP methodIMP = method_getImplementation(method);
     const char *types = method_getTypeEncoding(method);
     class_addMethod(mClass, name, methodIMP, types);
 }
 
-+ (void)exchangeMethodForClass:(Class)mClass
-                   methodFirst:(SEL)method1
-                  methodSecond:(SEL)method2 {
++ (void)addClassMethodForClass:(Class)mClass
+                    methodName:(SEL)name
+                     implement:(SEL)implement {
+    Method method = class_getClassMethod(mClass, implement);
+    IMP methodIMP = method_getImplementation(method);
+    const char *types = method_getTypeEncoding(method);
+    class_addMethod(mClass, name, methodIMP, types);
+}
+
++ (void)exchangeInstanceMethodForClass:(Class)mClass
+                           methodFirst:(SEL)method1
+                          methodSecond:(SEL)method2 {
     Method m1 = class_getInstanceMethod(mClass, method1);
     Method m2 = class_getInstanceMethod(mClass, method2);
     method_exchangeImplementations(m1, m2);
 }
+
++ (void)changeInstanceMethodForClass:(Class)mClass
+                              method:(SEL)method1
+                           implement:(SEL)method2 {
+    Method m1 = class_getInstanceMethod(mClass, method1);
+    Method m2 = class_getInstanceMethod(mClass, method2);
+    IMP m2IMP = method_getImplementation(m2);
+    method_setImplementation(m1, m2IMP);
+}
+
++ (void)changeClassMethodForClass:(Class)mClass
+                           method:(SEL)method1
+                        implement:(SEL)method2 {
+    Method m1 = class_getClassMethod(mClass, method1);
+    Method m2 = class_getClassMethod(mClass, method2);
+    IMP m2IMP = method_getImplementation(m2);
+    method_setImplementation(m1, m2IMP);
+}
+
++ (Class *)registClass {
+    uint32_t count;
+    Class *classes = objc_copyClassList(&count);
+    return classes;
+}
 @end
-
-
-
-
-
-
-

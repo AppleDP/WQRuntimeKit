@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		811261F220AD291A0011E60C /* WQObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 811261F120AD291A0011E60C /* WQObj.m */; };
+		8123117920D2629D00A94BC1 /* WQForword.m in Sources */ = {isa = PBXBuildFile; fileRef = 8123117820D2629D00A94BC1 /* WQForword.m */; };
 		843500581E67A49400BDAD67 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 843500571E67A49400BDAD67 /* main.m */; };
 		8435005B1E67A49400BDAD67 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435005A1E67A49400BDAD67 /* AppDelegate.m */; };
 		8435005E1E67A49400BDAD67 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435005D1E67A49400BDAD67 /* ViewController.m */; };
@@ -38,6 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		811261F020AD291A0011E60C /* WQObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WQObj.h; sourceTree = "<group>"; };
+		811261F120AD291A0011E60C /* WQObj.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WQObj.m; sourceTree = "<group>"; };
+		8123117720D2629D00A94BC1 /* WQForword.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WQForword.h; sourceTree = "<group>"; };
+		8123117820D2629D00A94BC1 /* WQForword.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WQForword.m; sourceTree = "<group>"; };
 		843500531E67A49400BDAD67 /* WQRuntimeKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WQRuntimeKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		843500571E67A49400BDAD67 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		843500591E67A49400BDAD67 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -119,6 +125,10 @@
 				8435008E1E67A7B200BDAD67 /* ViewController+WQViewController.m */,
 				843500901E67BBC200BDAD67 /* WQTestObj.h */,
 				843500911E67BBC200BDAD67 /* WQTestObj.m */,
+				811261F020AD291A0011E60C /* WQObj.h */,
+				811261F120AD291A0011E60C /* WQObj.m */,
+				8123117720D2629D00A94BC1 /* WQForword.h */,
+				8123117820D2629D00A94BC1 /* WQForword.m */,
 				8435005F1E67A49400BDAD67 /* Main.storyboard */,
 				843500621E67A49400BDAD67 /* Assets.xcassets */,
 				843500641E67A49400BDAD67 /* LaunchScreen.storyboard */,
@@ -225,11 +235,12 @@
 		8435004B1E67A49400BDAD67 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = jolimark;
 				TargetAttributes = {
 					843500521E67A49400BDAD67 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 34CX627AKS;
 					};
 					8435006B1E67A49400BDAD67 = {
 						CreatedOnToolsVersion = 7.2;
@@ -294,6 +305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8435005E1E67A49400BDAD67 /* ViewController.m in Sources */,
+				8123117920D2629D00A94BC1 /* WQForword.m in Sources */,
+				811261F220AD291A0011E60C /* WQObj.m in Sources */,
 				843500921E67BBC200BDAD67 /* WQTestObj.m in Sources */,
 				8435008C1E67A4D700BDAD67 /* WQRuntimeKit.m in Sources */,
 				8435005B1E67A49400BDAD67 /* AppDelegate.m in Sources */,
@@ -366,8 +379,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -409,8 +424,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -437,6 +454,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 34CX627AKS;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				INFOPLIST_FILE = WQRuntimeKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jolimark.www.WQRuntimeKit;
@@ -448,6 +467,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 34CX627AKS;
+				ENABLE_STRICT_OBJC_MSGSEND = NO;
 				INFOPLIST_FILE = WQRuntimeKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jolimark.www.WQRuntimeKit;
@@ -522,6 +543,7 @@
 				843500821E67A49400BDAD67 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		843500831E67A49400BDAD67 /* Build configuration list for PBXNativeTarget "WQRuntimeKitTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +552,7 @@
 				843500851E67A49400BDAD67 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		843500861E67A49400BDAD67 /* Build configuration list for PBXNativeTarget "WQRuntimeKitUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +561,7 @@
 				843500881E67A49400BDAD67 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

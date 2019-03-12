@@ -55,32 +55,59 @@
 + (NSArray<NSString *> *)protocolNamesWithClass:(Class)mClass;
 
 /**
- *  向类添加动态方法，如果类实例调用一个不存在的 name 方法，则实际上是调用 implement 方法
+ *  向类动态添加实例方法，如果类实例调用 name 方法，则实际上是调用 implement 方法
  *
  *  @param mClass    Class
  *  @param name      方法名
  *  @param implement 方法具体实现
  */
-+ (void)addMethodForClass:(Class)mClass
-               methodName:(SEL)name
-                implement:(SEL)implement;
-
++ (void)addInstanceMethodForClass:(Class)mClass
+                       methodName:(SEL)name
+                        implement:(SEL)implement;
 /**
- *  交换两个方法，原调用 method1 处在交换后将调用 method2。反之原调用 method2 处将调用 method1
+ *  向类动态添加类方法，如果类调用 name 方法，则实际上是调用 implement 方法
+ *
+ *  @param mClass    Class
+ *  @param name      方法名
+ *  @param implement 方法具体实现
+ */
++ (void)addClassMethodForClass:(Class)mClass
+                    methodName:(SEL)name
+                     implement:(SEL)implement;
+/**
+ *  交换两个实例方法，原调用 method1 处在交换后将调用 method2。反之原调用 method2 处将调用 method1
  *
  *  @param mClass  Class
  *  @param method1 方法1
  *  @param method2 方法2
  */
-+ (void)exchangeMethodForClass:(Class)mClass
-                   methodFirst:(SEL)method1
-                  methodSecond:(SEL)method2;
++ (void)exchangeInstanceMethodForClass:(Class)mClass
+                           methodFirst:(SEL)method1
+                          methodSecond:(SEL)method2;
+/**
+ * 将 method1 实例方法的具体实现替换为 method2 实例方法。在调用 method1 时实际上调用 method2，调用 method2 时还是调用 method2
+ *
+ *  @param mClass  Class
+ *  @param method1 方法1
+ *  @param method2 方法2
+ */
++ (void)changeInstanceMethodForClass:(Class)mClass
+                              method:(SEL)method1
+                           implement:(SEL)method2;
+/**
+ * 将 method1 类方法的具体实现替换为 method2 类方法。在调用 method1 时实际上调用 method2，调用 method2 时还是调用 method2
+ *
+ *  @param mClass  Class
+ *  @param method1 方法1
+ *  @param method2 方法2
+ */
++ (void)changeClassMethodForClass:(Class)mClass
+                           method:(SEL)method1
+                        implement:(SEL)method2;
+/**
+ * 获取所有注册的类
+ *
+ * @return 返回注册类
+ */
++ (Class *)registClass;
 @end
-
-
-
-
-
-
-
-
