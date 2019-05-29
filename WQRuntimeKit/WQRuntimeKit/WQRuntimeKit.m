@@ -88,6 +88,16 @@
     class_addMethod(mClass, name, methodIMP, types);
 }
 
++ (BOOL)addInstanceMethod:(NSString *)name
+                  toClass:(Class)tCls
+            withImplement:(SEL)impSel
+                fromClass:(Class)fCls {
+    Method method = class_getInstanceMethod(fCls, impSel);
+    IMP methodIMP = method_getImplementation(method);
+    const char *types = method_getTypeEncoding(method);
+    return class_addMethod(tCls, NSSelectorFromString(name), methodIMP, types);
+}
+
 + (void)addClassMethodForClass:(Class)mClass
                     methodName:(SEL)name
                      implement:(SEL)implement {
@@ -97,11 +107,29 @@
     class_addMethod(mClass, name, methodIMP, types);
 }
 
++ (BOOL)addClassMethod:(NSString *)name
+               toClass:(Class)tCls
+         withImplement:(SEL)impSel
+             fromClass:(Class)fCls {
+    Method method = class_getClassMethod(fCls, impSel);
+    IMP methodIMP = method_getImplementation(method);
+    const char *types = method_getTypeEncoding(method);
+    return class_addMethod(tCls, NSSelectorFromString(name), methodIMP, types);
+}
+
 + (void)exchangeInstanceMethodForClass:(Class)mClass
                            methodFirst:(SEL)method1
                           methodSecond:(SEL)method2 {
     Method m1 = class_getInstanceMethod(mClass, method1);
     Method m2 = class_getInstanceMethod(mClass, method2);
+    method_exchangeImplementations(m1, m2);
+}
+
++ (void)exchangeClassMethodForClass:(Class)mClass
+                        methodFirst:(SEL)method1
+                       methodSecond:(SEL)method2 {
+    Method m1 = class_getClassMethod(mClass, method1);
+    Method m2 = class_getClassMethod(mClass, method2);
     method_exchangeImplementations(m1, m2);
 }
 
@@ -123,9 +151,84 @@
     method_setImplementation(m1, m2IMP);
 }
 
-+ (Class *)registClass {
++ (Class *)getRegistClass {
     uint32_t count;
     Class *classes = objc_copyClassList(&count);
     return classes;
+}
+
++ (Class)createClassWithName:(NSString *)name
+                  superclass:(Class)superclass {
+    Class c = NSClassFromString(name);
+    if (c) {
+        // 已经生成前类
+        @throw [NSException exceptionWithName:@"WQRuntimeKeyException" reason:@"当前类已创建" userInfo:nil];
+        return c;
+    }
+    c = objc_allocateClassPair(superclass, name.UTF8String, 0);
+    return c;
+}
+
++ (void)registClass:(Class)cls {
+    objc_registerClassPair(cls);
+}
+
++ (BOOL)addIvarToClass:(Class)cls
+                  name:(NSString *)name
+                  type:(const char *)type {
+    size_t size = 0;
+    if(!strcmp(type, @encode(void))){
+        size = sizeof(void);
+    }else if(!strcmp(type, @encode(id))){
+        size = sizeof(id);
+    }else{
+        if (strcmp(type, @encode(void))  == 0) {
+            size = sizeof(void);
+        }else if (strcmp(type, @encode(int))  == 0) {
+            size = sizeof(int);
+        }else if (strcmp(type, @encode(unsigned int))  == 0) {
+            size = sizeof(unsigned int);
+        }else if (strcmp(type, @encode(float)) == 0) {
+            size = sizeof(float);
+        }else if (strcmp(type, @encode(double))  == 0) {
+            size = sizeof(double);
+        }else if (strcmp(type, @encode(BOOL)) == 0) {
+            size = sizeof(BOOL);
+        }else if(strcmp(type, @encode(NSInteger)) == 0){
+            size = sizeof(NSInteger);
+        }else if (strcmp(type, @encode(char)) == 0) {
+            size = sizeof(char);
+        }else if (strcmp(type, @encode(unsigned char)) == 0) {
+            size = sizeof(unsigned char);
+        }else if (strcmp(type, @encode(short)) == 0) {
+            size = sizeof(short);
+        }else if (strcmp(type, @encode(unsigned short)) == 0) {
+            size = sizeof(unsigned short);
+        }else if (strcmp(type, @encode(long)) == 0) {
+            size = sizeof(long);
+        }else if (strcmp(type, @encode(long long)) == 0) {
+            size = sizeof(long long);
+        }else if (strcmp(type, @encode(unsigned long long)) == 0) {
+            size = sizeof(unsigned long long);
+        }
+    }
+    return class_addIvar(cls, name.UTF8String, size, log2(size), type);
+}
+
++ (BOOL)addProcotolToClass:(Class)cls
+                  procotol:(Protocol *)procotol {
+    if (class_conformsToProtocol(cls, procotol)) {
+        @throw [NSException exceptionWithName:@"WQRuntimeKeyException" reason:@"当前类已经遵守协议" userInfo:nil];
+        return YES;
+    }
+    return class_addProtocol(cls, procotol);
+}
+
++ (Protocol *)createProtocol:(NSString *)name {
+    return objc_allocateProtocol(name.UTF8String);
+}
+
++ (void)registProtocol:(Protocol *)protocol {
+    objc_registerProtocol(protocol);
 }
 @end

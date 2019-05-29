@@ -12,6 +12,10 @@
 #import "WQObj.h"
 #import <objc/message.h>
 
+@protocol MyProtocolDelegate <NSObject>
+- (void)myFunction;
+@end
+
 @interface SecondClass : NSObject
 - (void)noThisMethod:(NSString *)value;
 - (void)func3;
@@ -28,7 +32,6 @@
 
 @interface ViewController ()
 <
-    NSCopying,
     UITableViewDelegate
 >
 {
@@ -45,6 +48,7 @@
 @property (nonatomic, strong) WQTestObj *obj;
 @property (nonatomic, assign) BOOL result;
 @property (nonatomic, copy) NSString *str0;
+@property (nonatomic, weak) id<MyProtocolDelegate> delegate;
 
 - (void)func1;
 - (void)func2;
@@ -59,11 +63,48 @@
 //    NSLog(@"%d",self.result);
 //    NSLog(@"%d",_result);
     
-    WQTestObj *obj1 = [[WQTestObj alloc] init];
-    WQTestObj *obj2 = [[WQTestObj alloc] init];
-    [WQRuntimeKit exchangeInstanceMethodForClass:[WQTestObj class] methodFirst:@selector(func1) methodSecond:@selector(func2)];
-    [obj2 func1];
-    [obj1 func1];
+//    WQTestObj *obj1 = [[WQTestObj alloc] init];
+//    WQTestObj *obj2 = [[WQTestObj alloc] init];
+//    [WQRuntimeKit exchangeInstanceMethodForClass:[WQTestObj class] methodFirst:@selector(func1) methodSecond:@selector(func2)];
+//    [obj2 func1];
+//    [obj1 func1];
+    
+//    Class cls = [WQRuntimeKit createClassWithName:@"MyClass" superclass:[NSObject class]];
+//    if ([WQRuntimeKit addInstanceMethod:@"func1" toClass:cls withImplement:@selector(func1) fromClass:[self class]]) {
+//        id obj = [[cls alloc] init];
+//        NSLog(@"%@",[WQRuntimeKit methodNamesWithClass:cls]);
+//        [obj func1];
+//    }
+//    if ([WQRuntimeKit addIvarToClass:cls name:@"myIva" type:@encode(id)]) {
+//        [WQRuntimeKit registClass:cls];
+//        id obj = [[cls alloc] init];
+//        [obj addObserver:self forKeyPath:@"myIva" options:NSKeyValueObservingOptionNew context:NULL];
+//        [obj setValue:@10 forKey:@"myIva"];
+//        NSLog(@"myIva: %@",[[obj valueForKey:@"myIva"] class]);
+//        NSLog(@"列表: %@",[WQRuntimeKit ivarNamesWithClass:cls]);
+//    }
+//    if ([WQRuntimeKit addProcotolToClass:cls procotol:@protocol(MyProtocolDelegate)]) {
+//        [WQRuntimeKit addInstanceMethod:@"myFunction" toClass:cls withImplement:@selector(myFunction) fromClass:self.class];
+//        [WQRuntimeKit registClass:cls];
+//        id obj = [[cls alloc] init];
+//        self.delegate = obj;
+//        NSLog(@"%@",[WQRuntimeKit methodNamesWithClass:cls]);
+//        NSLog(@"%@",[WQRuntimeKit protocolNamesWithClass:cls]);
+//        if ([self.delegate respondsToSelector:@selector(myFunction)]) {
+//            [self.delegate myFunction];
+//        }
+//    }
+//    Protocol *p = [WQRuntimeKit createProcotol:@"MyCreateProcotol"];
+//    [WQRuntimeKit registProcotol:p];
+//    [WQRuntimeKit addProcotolToClass:cls procotol:p];
+//    NSLog(@"%@",[WQRuntimeKit protocolNamesWithClass:cls]);
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"myIva"]) {
+        NSLog(@"change: %@ -- %@",object,change);
+    }
 }
 
 //- (void)viewDidAppear:(BOOL)animated {
@@ -79,8 +120,12 @@
 //    ((void(*)(void))m1IMP)();
 //    NSLog(@"func2");
 //}
-//
-//- (void)func1 {
-//    NSLog(@"func1");
-//}
+
+- (void)func1 {
+    NSLog(@"func1");
+}
+
+- (void)myFunction {
+    NSLog(@"%@ -- %s",self,__func__);
+}
 @end

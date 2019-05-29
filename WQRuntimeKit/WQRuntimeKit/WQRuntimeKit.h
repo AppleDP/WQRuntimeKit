@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
 @interface WQRuntimeKit : NSObject
 /**
  *  获取类名
@@ -25,7 +26,7 @@
  *
  *  @return 方法名数组
  */
-+ (NSArray *)methodNamesWithClass:(Class)mClass;
++ (NSArray<NSString *> *)methodNamesWithClass:(Class)mClass;
 
 /**
  *  获取类的变量名（分类变量除外），属性 + 实例变量
@@ -63,7 +64,19 @@
  */
 + (void)addInstanceMethodForClass:(Class)mClass
                        methodName:(SEL)name
-                        implement:(SEL)implement;
+                        implement:(SEL)implement DEPRECATED_MSG_ATTRIBUTE("方法已经废弃，请调用 -addInstanceMethod:toClass:withImplement:fromClass:");
+/**
+ *  向类动态添加实例方法
+ *
+ * @param name 方法名称
+ * @param tCls 须要添加方法的动态类
+ * @param impSel 方法的实现
+ * @param fCls 方法实现所在类
+ */
++ (BOOL)addInstanceMethod:(NSString *)name
+                  toClass:(Class)tCls
+            withImplement:(SEL)impSel
+                fromClass:(Class)fCls;
 /**
  *  向类动态添加类方法，如果类调用 name 方法，则实际上是调用 implement 方法
  *
@@ -73,7 +86,19 @@
  */
 + (void)addClassMethodForClass:(Class)mClass
                     methodName:(SEL)name
-                     implement:(SEL)implement;
+                     implement:(SEL)implement DEPRECATED_MSG_ATTRIBUTE("方法已经废弃，请调用 -addClassMethod:toClass:withImplement:fromClass:");
+/**
+ *  向类动态添加类方法
+ *
+ * @param name 方法名称
+ * @param tCls 须要添加方法的动态类
+ * @param impSel 方法的实现
+ * @param fCls 方法实现所在类
+ */
++ (BOOL)addClassMethod:(NSString *)name
+               toClass:(Class)tCls
+         withImplement:(SEL)impSel
+             fromClass:(Class)fCls;
 /**
  *  交换两个实例方法，原调用 method1 处在交换后将调用 method2。反之原调用 method2 处将调用 method1
  *
@@ -84,6 +109,16 @@
 + (void)exchangeInstanceMethodForClass:(Class)mClass
                            methodFirst:(SEL)method1
                           methodSecond:(SEL)method2;
+/**
+ *  交换两个类方法，原调用 method1 处在交换后将调用 method2。反之原调用 method2 处将调用 method1
+ *
+ *  @param mClass  Class
+ *  @param method1 方法1
+ *  @param method2 方法2
+ */
++ (void)exchangeClassMethodForClass:(Class)mClass
+                        methodFirst:(SEL)method1
+                       methodSecond:(SEL)method2;
 /**
  * 将 method1 实例方法的具体实现替换为 method2 实例方法。在调用 method1 时实际上调用 method2，调用 method2 时还是调用 method2
  *
@@ -109,5 +144,53 @@
  *
  * @return 返回注册类
  */
-+ (Class *)registClass;
++ (Class *)getRegistClass;
+
+/**
+ * 创建类
+ *
+ * @param name 类名
+ * @param superclass 继承
+ */
++ (Class)createClassWithName:(NSString *)name
+                  superclass:(Class)superclass;
+/**
+ * 注册当前类，将类注册到当前环境中
+ *
+ * @param cls 注册类
+ */
++ (void)registClass:(Class)cls;
+
+/**
+ * 给类添加实例变量，添加后可以通过 -setValue:forKey: 赋值，-valueForKey: 取值
+ *
+ * @param cls 添加实例变量的类
+ * @param name 变量名称
+ * @param type 变量类型
+ */
++ (BOOL)addIvarToClass:(Class)cls
+                  name:(NSString *)name
+                  type:(const char *)type;
+/**
+ * 添加遵守协议
+ *
+ * @param cls 遵守协议的类
+ * @param procotol 协议
+ */
++ (BOOL)addProcotolToClass:(Class)cls
+                  procotol:(Protocol *)procotol;
+/**
+ * 创建协议
+ *
+ * @param name 协议名
+ */
++ (Protocol *)createProtocol:(NSString *)name;
+
+/**
+ * 注册协议
+ *
+ * @param protocol 注册协议
+ */
++ (void)registProtocol:(Protocol *)protocol;
 @end
+NS_ASSUME_NONNULL_END
