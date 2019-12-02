@@ -7,125 +7,29 @@
 //
 
 #import "ViewController.h"
-#import "ViewController+WQViewController.h"
-#import "WQTestObj.h"
-#import "WQObj.h"
-#import <objc/message.h>
+#import <objc/runtime.h>
 
 @protocol MyProtocolDelegate <NSObject>
+@required
 - (void)myFunction;
 @end
 
-@interface SecondClass : NSObject
-- (void)noThisMethod:(NSString *)value;
-- (void)func3;
-@end
-
-@implementation SecondClass
-- (void)noThisMethod:(NSString *)value {
-    NSLog(@"SecondClass中的方法实现%@", value);
-}
-- (void)func3 {
-    NSLog(@"function 3");
-}
-@end
-
 @interface ViewController ()
-<
-    UITableViewDelegate
->
-{
-    
-    IMP m1IMP;
-@public
-    dispatch_queue_t queue;
-@private
-    NSObject *obj1;
-@protected
-    NSObject *obj2;
-}
-@property (nonatomic, weak) UIView *wqView;
-@property (nonatomic, strong) WQTestObj *obj;
-@property (nonatomic, assign) BOOL result;
-@property (nonatomic, copy) NSString *str0;
-@property (nonatomic, weak) id<MyProtocolDelegate> delegate;
-
-- (void)func1;
-- (void)func2;
 @end
 
 @implementation ViewController
 - (void)viewDidLoad {
-//    [super viewDidLoad];
-//    Ivar _resultIvar = class_getInstanceVariable([self class], "_result");
-//    object_setIvar(self, _resultIvar, @1);
-//    NSLog(@"%@",object_getIvar(self, _resultIvar));
-//    NSLog(@"%d",self.result);
-//    NSLog(@"%d",_result);
-    
-//    WQTestObj *obj1 = [[WQTestObj alloc] init];
-//    WQTestObj *obj2 = [[WQTestObj alloc] init];
-//    [WQRuntimeKit exchangeInstanceMethodForClass:[WQTestObj class] methodFirst:@selector(func1) methodSecond:@selector(func2)];
-//    [obj2 func1];
-//    [obj1 func1];
-    
-//    Class cls = [WQRuntimeKit createClassWithName:@"MyClass" superclass:[NSObject class]];
-//    if ([WQRuntimeKit addInstanceMethod:@"func1" toClass:cls withImplement:@selector(func1) fromClass:[self class]]) {
-//        id obj = [[cls alloc] init];
-//        NSLog(@"%@",[WQRuntimeKit methodNamesWithClass:cls]);
-//        [obj func1];
-//    }
-//    if ([WQRuntimeKit addIvarToClass:cls name:@"myIva" type:@encode(id)]) {
-//        [WQRuntimeKit registClass:cls];
-//        id obj = [[cls alloc] init];
-//        [obj addObserver:self forKeyPath:@"myIva" options:NSKeyValueObservingOptionNew context:NULL];
-//        [obj setValue:@10 forKey:@"myIva"];
-//        NSLog(@"myIva: %@",[[obj valueForKey:@"myIva"] class]);
-//        NSLog(@"列表: %@",[WQRuntimeKit ivarNamesWithClass:cls]);
-//    }
-//    if ([WQRuntimeKit addProcotolToClass:cls procotol:@protocol(MyProtocolDelegate)]) {
-//        [WQRuntimeKit addInstanceMethod:@"myFunction" toClass:cls withImplement:@selector(myFunction) fromClass:self.class];
-//        [WQRuntimeKit registClass:cls];
-//        id obj = [[cls alloc] init];
-//        self.delegate = obj;
-//        NSLog(@"%@",[WQRuntimeKit methodNamesWithClass:cls]);
-//        NSLog(@"%@",[WQRuntimeKit protocolNamesWithClass:cls]);
-//        if ([self.delegate respondsToSelector:@selector(myFunction)]) {
-//            [self.delegate myFunction];
-//        }
-//    }
-//    Protocol *p = [WQRuntimeKit createProcotol:@"MyCreateProcotol"];
-//    [WQRuntimeKit registProcotol:p];
-//    [WQRuntimeKit addProcotolToClass:cls procotol:p];
-//    NSLog(@"%@",[WQRuntimeKit protocolNamesWithClass:cls]);
-    
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"myIva"]) {
-        NSLog(@"change: %@ -- %@",object,change);
+    Class objClass = [WQRuntimeKit createClassWithName:@"MyObject" superclass:[NSObject class]];
+    [WQRuntimeKit addInstanceMethod:@"myFunc" toClass:objClass withImplement:@selector(func) fromClass:self.class];
+    [WQRuntimeKit registClass:objClass];
+    id obj = [[objClass alloc] init];
+    if ([obj respondsToSelector:@selector(myFunc)]) {
+        [obj performSelector:@selector(myFunc)];
     }
+    NSLog(@"%@",[WQRuntimeKit methodNamesWithClass:objClass]);
 }
 
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//}
-//
-//- (void)func8:(NSString *)str {
-//    NSLog(@"func 8");
-//}
-//
-//- (void)func2 {
-//    // 用 func1 的函数 IMP 指针调用原 func1 函数
-//    ((void(*)(void))m1IMP)();
-//    NSLog(@"func2");
-//}
-
-- (void)func1 {
-    NSLog(@"func1");
-}
-
-- (void)myFunction {
-    NSLog(@"%@ -- %s",self,__func__);
+- (void)func {
+    NSLog(@"%@ -- %s",self.class,__func__);
 }
 @end

@@ -84,7 +84,7 @@ void func66 (NSNumber *i) {
 }
 
 - (void)func {
-    NSLog(@"Func");
+    NSLog(@"Func: %d",self.volume++);
 }
 
 - (id)performSelector:(SEL)aSelector

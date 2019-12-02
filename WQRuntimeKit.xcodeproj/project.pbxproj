@@ -18,7 +18,6 @@
 		843500711E67A49400BDAD67 /* WQRuntimeKitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 843500701E67A49400BDAD67 /* WQRuntimeKitTests.m */; };
 		8435007C1E67A49400BDAD67 /* WQRuntimeKitUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435007B1E67A49400BDAD67 /* WQRuntimeKitUITests.m */; };
 		8435008C1E67A4D700BDAD67 /* WQRuntimeKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435008B1E67A4D700BDAD67 /* WQRuntimeKit.m */; };
-		8435008F1E67A7B200BDAD67 /* ViewController+WQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8435008E1E67A7B200BDAD67 /* ViewController+WQViewController.m */; };
 		843500921E67BBC200BDAD67 /* WQTestObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 843500911E67BBC200BDAD67 /* WQTestObj.m */; };
 /* End PBXBuildFile section */
 
@@ -62,8 +61,6 @@
 		8435007D1E67A49400BDAD67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8435008A1E67A4D700BDAD67 /* WQRuntimeKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WQRuntimeKit.h; sourceTree = "<group>"; };
 		8435008B1E67A4D700BDAD67 /* WQRuntimeKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WQRuntimeKit.m; sourceTree = "<group>"; };
-		8435008D1E67A7B200BDAD67 /* ViewController+WQViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+WQViewController.h"; sourceTree = "<group>"; };
-		8435008E1E67A7B200BDAD67 /* ViewController+WQViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+WQViewController.m"; sourceTree = "<group>"; };
 		843500901E67BBC200BDAD67 /* WQTestObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WQTestObj.h; sourceTree = "<group>"; };
 		843500911E67BBC200BDAD67 /* WQTestObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WQTestObj.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -121,8 +118,6 @@
 				8435005A1E67A49400BDAD67 /* AppDelegate.m */,
 				8435005C1E67A49400BDAD67 /* ViewController.h */,
 				8435005D1E67A49400BDAD67 /* ViewController.m */,
-				8435008D1E67A7B200BDAD67 /* ViewController+WQViewController.h */,
-				8435008E1E67A7B200BDAD67 /* ViewController+WQViewController.m */,
 				843500901E67BBC200BDAD67 /* WQTestObj.h */,
 				843500911E67BBC200BDAD67 /* WQTestObj.m */,
 				811261F020AD291A0011E60C /* WQObj.h */,
@@ -257,6 +252,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -310,7 +306,6 @@
 				843500921E67BBC200BDAD67 /* WQTestObj.m in Sources */,
 				8435008C1E67A4D700BDAD67 /* WQRuntimeKit.m in Sources */,
 				8435005B1E67A49400BDAD67 /* AppDelegate.m in Sources */,
-				8435008F1E67A7B200BDAD67 /* ViewController+WQViewController.m in Sources */,
 				843500581E67A49400BDAD67 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

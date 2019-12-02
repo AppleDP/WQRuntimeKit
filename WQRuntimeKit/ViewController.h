@@ -12,7 +12,5 @@
 @interface ViewController : UIViewController
 @property (nonatomic, copy) NSString *str;
 @property (nonatomic, assign) NSInteger integer;
-
-- (void)func1;
 @end
 
